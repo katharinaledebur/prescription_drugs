@@ -1,67 +1,40 @@
 # Prescription drugs at the core of darknet drug markets
 
-This repository contains the analysis code accompanying the study:
+This repository contains the code used for the figures, tables and numerical results reported in the manuscript. Products are connected when they are disproportionately offered by the same vendors across four darknet markets crawled in 2021 and early 2022.
 
-**“Prescription drugs at the core of darknet drug markets”**
+The repository intentionally excludes exploratory and unreported analyses, raw marketplace files and generated outputs.
 
-The analyses examine the position of prescription drugs within darknet drug retail using product co-offering networks, vendor portfolios, market-level category structure, shipping reach, and null-model comparisons across four darknet markets crawled between June 2021 and January 2022.
+## Data
 
-## Repository structure
+The raw crawl is not public because it contains sensitive marketplace level information. The public Zenodo record contains derived source data for every reported figure and table, analysis results, product space networks and documentation. Those files allow the reported results to be inspected without exposing marketplace records, but they do not permit the complete reconstruction of the analysis from the original crawl. Requests for the restricted data are considered by the data provider under an appropriate data use agreement, as described in the manuscript. Derived data underlying the reported figures, tables and models are available at https://doi.org/10.5281/zenodo.23037050
 
-```text
-.
-├── CITATION.cff
-├── LICENSE
-├── README.md
-├── requirements.txt
-├── notebooks/
-├── scripts/
-├── prescription_reports/
+The product category mapping is included in this repository.
+
+The analysis was run with Python 3.12. Create an environment and install the pinned dependencies:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+jupyter lab
 ```
-`notebooks/` contains analysis notebooks and supporting exploratory analyses.
 
-`scripts/` contains reusable analysis and data-processing scripts.
+1. `01_product_space.ipynb` constructs the four product spaces and Supplementary Figure S3.
+2. `02_figure_1_core_share.ipynb` creates Figure 1 and the label permutation results in Supplementary Table S1.
+3. `03_figure_2_degree_vs_reviews.ipynb` creates Figure 2.
+4. `04_centrality_models.ipynb` creates the models reported in Supplementary Tables S3 and S4.
+5. `05_prescription_neighborhoods.ipynb` creates the within category and cross category tie summaries reported in the Results.
+6. `06_supplementary_market_figures.ipynb` creates Supplementary Figures S1 and S2.
 
-`prescription_reports/` contains files used to generate analysis reports and manuscript-related outputs.
+Two supporting scripts reproduce the remaining reported results:
 
-`data_outputs/` contains locally generated analysis outputs. Publicly released derived data are archived separately on Zenodo.
+```bash
+python scripts/01_degree_preserving_null.py --randomizations 5000
+python scripts/02_vendor_portfolio_overlap.py
+```
 
-`requirements.txt` specifies the Python dependencies used for the analyses.
-
-`CITATION.cff` contains citation metadata for this repository.
-
-
-Clone the repository:
-
-    git clone https://github.com/katharinaledebur/prescription_drugs.git
-    cd prescription_drugs
-
-Create a Python environment and install the required packages:
-
-    python -m venv .venv
-    source .venv/bin/activate
-    pip install -r requirements.txt
-
-Download the corresponding derived dataset from Zenodo:
-
-https://doi.org/10.5281/zenodo.23037050
-
-The Zenodo archive contains the data products required to reproduce the publicly reported figures and statistical results.
-
-
-## Citation
-
-If you use the derived dataset, please cite the Zenodo record:
-
-Ledebur, K., Frank, R., & Haslhofer, B.  
-**Data supporting “Prescription drugs at the core of darknet drug markets”.**  
-Zenodo.  
-https://doi.org/10.5281/zenodo.23037050
-
-Citation information for the code repository is also provided in `CITATION.cff`.
+The first script creates the degree preserving bipartite null reported in Supplementary Table S2. The second creates the prescription vendor overlap counts reported in the Results.
 
 ## License
 
-The code in this repository is released under the MIT License.
-
-The derived dataset archived on Zenodo is released separately under CC BY 4.0.
+The code is released under the MIT License. The data distributed through Zenodo are governed by the terms stated in that record.
